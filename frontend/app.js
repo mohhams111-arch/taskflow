@@ -6,6 +6,8 @@ const taskList = document.getElementById('taskList');
 
 const searchInput = document.getElementById('searchInput');
 
+const taskCounter = document.getElementById('taskCounter');
+
 let editingTaskId = null;
 
 async function getTasks() {
@@ -15,6 +17,8 @@ async function getTasks() {
     const tasks = await response.json();
 
     taskList.innerHTML = '';
+
+    taskCounter.innerText = tasks.length;
 
     tasks
     .filter(task =>
@@ -68,11 +72,11 @@ async function getTasks() {
                     '${task.priority}',
                     '${task.dueDate}'
                 )">
-                    Edit
+                    ✏️ Edit
                 </button>
 
                 <button onclick="deleteTask(${task.id})">
-                    Delete
+                    🗑️ Delete
                 </button>
 
             </div>
