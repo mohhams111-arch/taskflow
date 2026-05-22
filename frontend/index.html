@@ -15,75 +15,105 @@
 
 <body>
 
-    <div class="container">
+    <div class="layout">
 
-        <h1>🚀 TaskFlow</h1>
+        <div class="sidebar">
 
-        <div class="counter-box">
+            <h2>📅 Daily Planner</h2>
 
-            Total Tasks:
-            <span id="taskCounter">0</span>
+            <input type="date" id="calendarDate">
+
+            <div id="dailyTasks"></div>
 
         </div>
 
-        <form id="taskForm">
+        <div class="container">
+
+            <h1>🚀 TaskFlow</h1>
+
+            <div class="counter-box">
+
+                Total Tasks:
+                <span id="taskCounter">0</span>
+
+            </div>
+
+            <form id="taskForm">
+
+                <input 
+                    type="text" 
+                    id="title" 
+                    placeholder="Task Title"
+                    required
+                >
+
+                <input 
+                    type="text" 
+                    id="description" 
+                    placeholder="Description"
+                >
+
+                <select id="status">
+
+                    <option value="pending">
+                        Pending
+                    </option>
+
+                    <option value="completed">
+                        Completed
+                    </option>
+
+                </select>
+
+                <select id="priority">
+
+                    <option value="low">
+                        Low
+                    </option>
+
+                    <option value="medium">
+                        Medium
+                    </option>
+
+                    <option value="high">
+                        High
+                    </option>
+
+                </select>
+
+                <input type="date" id="dueDate">
+
+                <button type="submit">
+                    ➕ Add Task
+                </button>
+
+            </form>
 
             <input 
                 type="text" 
-                id="title" 
-                placeholder="Task Title"
-                required
+                id="searchInput" 
+                placeholder="🔍 Search tasks..."
             >
 
-            <input 
-                type="text" 
-                id="description" 
-                placeholder="Description"
-            >
+            <div class="filters">
 
-            <select id="status">
+                <button onclick="setFilter('all')">
+                    All
+                </button>
 
-                <option value="pending">
-                    Pending
-                </option>
-
-                <option value="completed">
+                <button onclick="setFilter('completed')">
                     Completed
-                </option>
+                </button>
 
-            </select>
+                <button onclick="setFilter('pending')">
+                    Pending
+                </button>
 
-            <select id="priority">
+            </div>
 
-                <option value="low">
-                    Low
-                </option>
+            <div id="taskList"></div>
 
-                <option value="medium">
-                    Medium
-                </option>
-
-                <option value="high">
-                    High
-                </option>
-
-            </select>
-
-            <input type="date" id="dueDate">
-
-            <button type="submit">
-                ➕ Add Task
-            </button>
-
-        </form>
-
-        <input 
-            type="text" 
-            id="searchInput" 
-            placeholder="🔍 Search tasks..."
-        >
-
-        <div id="taskList"></div>
+        </div>
 
     </div>
 

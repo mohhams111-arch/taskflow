@@ -8,13 +8,23 @@ const searchInput = document.getElementById('searchInput');
 
 const taskCounter = document.getElementById('taskCounter');
 
+const calendarDate = document.getElementById('calendarDate');
+
+const dailyTasks = document.getElementById('dailyTasks');
+
 let editingTaskId = null;
+
+let currentFilter = 'all';
+
+let allTasks = [];
 
 async function getTasks() {
 
     const response = await fetch(apiUrl);
 
     const tasks = await response.json();
+
+    allTasks = tasks;
 
     taskList.innerHTML = '';
 
@@ -26,6 +36,14 @@ async function getTasks() {
             searchInput.value.toLowerCase()
         )
     )
+    .filter(task => {
+
+        if (currentFilter === 'all') {
+            return true;
+        }
+
+        return task.status === currentFilter;
+    })
     .forEach(task => {
 
         const statusClass =
@@ -83,6 +101,47 @@ async function getTasks() {
         `;
     });
 }
+
+function setFilter(filter) {
+
+    currentFilter = filter;
+
+    getTasks();
+}
+
+calendarDate.addEventListener('change', () => {
+
+    const selectedDate = calendarDate.value;
+
+    const filteredTasks = allTasks.filter(task =>
+        task.dueDate === selectedDate
+    );
+
+    dailyTasks.innerHTML = '';
+
+    if (filteredTasks.length === 0) {
+
+        dailyTasks.innerHTML = `
+            <p>No tasks for this day</p>
+        `;
+
+        return;
+    }
+
+    filteredTasks.forEach(task => {
+
+        dailyTasks.innerHTML += `
+
+            <div class="mini-task">
+
+                <h4>${task.title}</h4>
+
+                <p>${task.status}</p>
+
+            </div>
+        `;
+    });
+});
 
 taskForm.addEventListener('submit', async (e) => {
 
